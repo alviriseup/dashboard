@@ -94,9 +94,11 @@
 <br>
 <br>
 <div class="row">
-	{% block start %}
+	{% block content %}
 	{% if user.is_authenticated %}
-	<center><h1>Welcome back {{user.username}}!</h1></center>
+	<center><h1>Welcome back {{user.username}}!</h1>
+		<a href="{% url 'user_list' %}" class="btn btn-primary">Go to Dashboard</a>
+	</center>
 	{% else %}
 	<center><h1>Please, log in.</h1></center>
 	{% endif %}
