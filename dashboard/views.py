@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 
 @login_required
 def user_list(request):
-    users = User.objects.all()
-    return render(request, 'dashboard/user_list.html', {'users': users})
+    query = request.GET.get('search', '')
+    # users = User.objects.all()
+    users = User.objects.filter(username__icontains=query)
+
+    return render(request, 'dashboard/user_list.html', {'users': users, 'query': query})
 

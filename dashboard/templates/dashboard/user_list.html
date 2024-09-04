@@ -11,6 +11,15 @@
         {% endfor %}
     </ul> {% endcomment %}
 
+    <form method="GET" action="{% url "user_list" %}">
+        <div class="form-group">
+            <input type="text" name="search" value="{{ query }}" class="form-control" placeholder="Search by username...">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <br/>
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -23,6 +32,10 @@
                 <tr>
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">No users found.</td>
                 </tr>
             {% endfor %}
         </tbody>
