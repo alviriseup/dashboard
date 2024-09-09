@@ -16,11 +16,20 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password1')
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+
             messages.success(request, f'Your account has been created ! You are now able to log in')
-            return redirect('login')
+            return redirect('index')
     else:
         form = UserRegisterForm()
     return render(request, 'user/register.html', {'form': form, 'title':'register here'})
