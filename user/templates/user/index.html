@@ -99,7 +99,7 @@
 																	John Doe <i class="mdi mdi-chevron-down"></i>
 															</a>
 											<ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 29px, 0px); top: 0px; left: 0px; will-change: transform;">
-												<li><a href="javascript:void(0)" class="dropdown-item"><i class="mdi mdi-face-profile mr-2"></i> Profile<div class="ripple-wrapper"></div></a></li>
+												<li><a href="{% url 'user-profile' %}" class="dropdown-item"><i class="mdi mdi-face-profile mr-2"></i> Profile<div class="ripple-wrapper"></div></a></li>
 												<li><a href="javascript:void(0)" class="dropdown-item"><i class="mdi mdi-settings mr-2"></i> Settings</a></li>
 												<li><a href="javascript:void(0)" class="dropdown-item"><i class="mdi mdi-lock mr-2"></i> Lock screen</a></li>
 												<li><a href="javascript:void(0)" class="dropdown-item"><i class="mdi mdi-power-settings mr-2"></i> Logout</a></li>
@@ -205,7 +205,7 @@
         <script src="{% static 'assets/libs/flot-charts/jquery' %}.flot.crosshair.js"></script>
 
         <!-- Dashboard init JS -->
-        <script src="{% static 'assets/js/pages/dashboard.init' %}.js"></script>
+        <script src="{% static 'assets/js/pages/dashboard.init.js' %}"></script>
 
         <!-- App js -->
         <script src="{% static 'assets/js/app.min.js' %}"></script>

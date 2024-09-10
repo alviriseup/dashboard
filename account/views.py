@@ -6,7 +6,7 @@ from django.shortcuts import render
 def user_profile(request):
     user = request.user
     context = {
-        'full name': f'{user.first_name} {user.last_name}',
+        'full_name': f'{user.first_name} {user.last_name}',
         'username': user.username,
         'email': user.email,
     }
