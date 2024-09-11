@@ -3,9 +3,8 @@
 
 {% block content %}
 
-<div class="content-page">
-    <div class="content">
-
+<div id="wrapper">
+    
         <!-- Start Content-->
         <div class="container-fluid">
             <div class="wraper">
@@ -32,40 +31,12 @@
                                 </a>
                             </li>
                             <li class="nav-item tab">
-                                <a class="nav-link" id="activities-tab" data-toggle="tab" href="#activities" role="tab" aria-controls="activities" aria-selected="false">
-                                    <span class="d-block d-sm-none"><i class="fa fa-user"></i></span>
-                                    <span class="d-none d-sm-block">Activities</span>
-                                </a>
-                            </li>
-                            <li class="nav-item tab">
-                                <a class="nav-link" id="projects-tab" data-toggle="tab" href="#projects" role="tab" aria-controls="projects" aria-selected="false">
-                                    <span class="d-block d-sm-none"><i class="fa fa-envelope"></i></span>
-                                    <span class="d-none d-sm-block">Projects</span>
-                                </a>
-                            </li>
-                            <li class="nav-item tab">
                                 <a class="nav-link" id="setting-tab" data-toggle="tab" href="#setting" role="tab" aria-controls="setting" aria-selected="false">
                                     <span class="d-block d-sm-none"><i class="fa fa-cog"></i></span>
                                     <span class="d-none d-sm-block">Settings</span>
                                 </a>
                             </li>
                         </ul>
-                    </div>
-                    <div class="d-none d-sm-block col-md-3 col-xl-6">
-                        <div class="float-right mt-2">
-                            <div class="dropdown">
-                                <button class="btn btn-primary btn-rounded dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Following
-                                    <i class="mdi mdi-chevron-down"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a href="#" class="dropdown-item">Poke</a></li>
-                                    <li><a href="#" class="dropdown-item">Private message</a></li>
-                                    <li class="dropdown-divider"></li>
-                                    <li><a href="#" class="dropdown-item">Unfollow</a></li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -76,6 +47,7 @@
 
                                 <div class="row">
                                     <div class="col-lg-4">
+
                                         <!-- Personal-Information -->
                                         <div class="card card-default card-fill">
                                             <div class="card-header">
@@ -101,24 +73,10 @@
                                         </div>
                                         <!-- Personal-Information -->
 
-                                        <!-- Languages -->
-                                        <div class="card card-default card-fill">
-                                            <div class="card-header">
-                                                <h3 class="card-title">Languages</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <ul class="mb-0">
-                                                    <li>English</li>
-                                                    <li>Franch</li>
-                                                    <li>Greek</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!-- Languages -->
-
                                     </div>
 
                                     <div class="col-lg-8">
+
                                         <!-- Personal-Information -->
                                         <div class="card card-default card-fill">
                                             <div class="card-header">
@@ -134,187 +92,15 @@
                                         </div>
                                         <!-- Personal-Information -->
 
-                                        <div class="card card-default card-fill">
-                                            <div class="card-header">
-                                                <h3 class="card-title">Skills</h3>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="mb-4">
-                                                    <h6>Angular Js <span class="float-right">60%</span></h6>
-                                                    <div class="progress progress-sm">
-                                                        <div class="progress-bar bg-primary wow animated progress-animated" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                                            <span class="sr-only">60% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <h6>Javascript <span class="float-right">90%</span></h6>
-                                                    <div class="progress progress-sm">
-                                                        <div class="progress-bar bg-pink wow animated progress-animated" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-                                                            <span class="sr-only">90% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <h6>Wordpress <span class="float-right">80%</span></h6>
-                                                    <div class="progress progress-sm">
-                                                        <div class="progress-bar bg-purple wow animated progress-animated" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                                            <span class="sr-only">80% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-0">
-                                                    <h6>HTML5 &amp; CSS3 <span class="float-right">95%</span></h6>
-                                                    <div class="progress progress-sm mb-0">
-                                                        <div class="progress-bar bg-info wow animated progress-animated" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%">
-                                                            <span class="sr-only">95% Complete</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
                                     </div>
 
                                 </div>
                             </div>
 
-                            <div class="tab-pane" id="activities" aria-labelledby="activities-tab">
-                                <!-- Personal-Information -->
-                                <div class="card card-default card-fill">
-
-                                    <div class="card-body">
-                                        <div class="timeline-2">
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="text-muted">5 minutes ago</div>
-                                                    <p><strong><a href="#" class="text-info">John Doe</a></strong> Uploaded a photo <strong>"DSC000586.jpg"</strong></p>
-                                                </div>
-                                            </div>
-
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="text-muted">30 minutes ago</div>
-                                                    <p><a href="" class="text-info">Lorem</a> commented your post.</p>
-                                                    <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                                                </div>
-                                            </div>
-
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="text-muted">59 minutes ago</div>
-                                                    <p><a href="" class="text-info">Jessi</a> attended a meeting with<a href="#" class="text-success">John Doe</a>.</p>
-                                                    <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                                                </div>
-                                            </div>
-
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="text-muted">5 minutes ago</div>
-                                                    <p><strong><a href="#" class="text-info">John Doe</a></strong>Uploaded 2 new photos</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="text-muted">30 minutes ago</div>
-                                                    <p><a href="" class="text-info">Lorem</a> commented your post.</p>
-                                                    <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                                                </div>
-                                            </div>
-
-                                            <div class="time-item">
-                                                <div class="item-info">
-                                                    <div class="text-muted">59 minutes ago</div>
-                                                    <p><a href="" class="text-info">Jessi</a> attended a meeting with<a href="#" class="text-success">John Doe</a>.</p>
-                                                    <p><em>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tellus ut tincidunt euismod. "</em></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <!-- Personal-Information -->
-                            </div>
-
-                            <div class="tab-pane" id="projects" aria-labelledby="projects-tab">
-
-                                <!-- Personal-Information -->
-                                <div class="card card-default card-fill">
-                                    <div class="card-header">
-                                        <h3 class="card-title">My Projects</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Project Name</th>
-                                                        <th>Start Date</th>
-                                                        <th>Due Date</th>
-                                                        <th>Status</th>
-                                                        <th>Assign</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Moltran Admin</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>07/05/2015</td>
-                                                        <td><span class="badge badge-info">Work in Progress</span></td>
-                                                        <td>Coderthemes</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Moltran Frontend</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>07/05/2015</td>
-                                                        <td><span class="badge badge-success">Pending</span></td>
-                                                        <td>Coderthemes</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>Moltran Admin</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>07/05/2015</td>
-                                                        <td><span class="badge badge-pink">Done</span></td>
-                                                        <td>Coderthemes</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>Moltran Frontend</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>07/05/2015</td>
-                                                        <td><span class="badge badge-purple">Work in Progress</span></td>
-                                                        <td>Coderthemes</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>Moltran Admin</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>07/05/2015</td>
-                                                        <td><span class="badge badge-warning">Coming soon</span></td>
-                                                        <td>Coderthemes</td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <!-- Personal-Information -->
-                            </div>
 
                             <div class="tab-pane" id="setting" aria-labelledby="setting-tab">
 
-                                <!-- Personal-Information -->
+                                <!-- Settings-Information -->
                                 <div class="card card-default card-fill">
                                     <div class="card-header">
                                         <h3 class="card-title">Edit Profile</h3>
@@ -350,7 +136,7 @@
 
                                     </div>
                                 </div>
-                                <!-- Personal-Information -->
+                                <!-- Settings-Information -->
                             </div>
                         </div>
                     </div>
@@ -360,7 +146,6 @@
             <!-- end container-fluid -->
 
         </div>
-    </div>
     <!-- end content -->
 
 </div>
