@@ -7,6 +7,20 @@
     
         <!-- Start Content-->
         <div class="container-fluid">
+
+            {% if messages %}
+                <div class="container mt-3">
+                    {% for message in messages %}
+                        <div class="alert alert-dismissible fade show {{ message.tags }}" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <div class="wraper">
                 <div class="row">
                     <div class="col-sm-12">
@@ -25,19 +39,19 @@
                     <div class="col-md-9 col-xl-6">
                         <ul class="nav nav-tabs tabs-bordered nav-justified" role="tablist">
                             <li class="nav-item tab">
-                                <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">
+                                <a class="nav-link {% if not request.GET.tab or request.GET.tab == 'about' %} active {% endif %}" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">
                                     <span class="d-block d-sm-none"><i class="fa fa-home"></i></span>
                                     <span class="d-none d-sm-block">About Me</span>
                                 </a>
                             </li>
                             <li class="nav-item tab">
-                                <a class="nav-link" id="setting-tab" data-toggle="tab" href="#setting" role="tab" aria-controls="setting" aria-selected="false">
+                                <a class="nav-link {% if request.GET.tab == 'settings' %} active {% endif %}" id="setting-tab" data-toggle="tab" href="#setting" role="tab" aria-controls="setting" aria-selected="false">
                                     <span class="d-block d-sm-none"><i class="fa fa-cog"></i></span>
                                     <span class="d-none d-sm-block">Settings</span>
                                 </a>
                             </li>
                             <li class="nav-item tab">
-                                <a class="nav-link" id="password-tab" data-toggle="tab" href="#password" role="tab" aria-controls="password" aria-selected="false">
+                                <a class="nav-link {% if request.GET.tab == 'password' %} active {% endif %}" id="password-tab" data-toggle="tab" href="#password" role="tab" aria-controls="password" aria-selected="false">
                                     <span class="d-block d-sm-none"><i class="fa fa-cog"></i></span>
                                     <span class="d-none d-sm-block">Password</span>
                                 </a>
@@ -49,7 +63,7 @@
                     <div class="col-lg-12">
 
                         <div class="tab-content profile-tab-content">
-                            <div class="tab-pane show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+                            <div class="tab-pane fade {% if not request.GET.tab or request.GET.tab == 'about' %} show active {% endif %}" id="about" role="tabpanel" aria-labelledby="about-tab">
 
                                 <div class="row">
                                     <div class="col-lg-4">
@@ -104,7 +118,7 @@
                             </div>
 
 
-                            <div class="tab-pane" id="setting" aria-labelledby="setting-tab">
+                            <div class="tab-pane fade {% if request.GET.tab == 'settings' %} show active {% endif %}" id="setting" role="tabpanel" aria-labelledby="setting-tab">
 
                                 <!-- Settings-Information -->
                                 <div class="card card-default card-fill">
@@ -112,7 +126,7 @@
                                         <h3 class="card-title">Edit Profile</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form method="POST" action="{% url 'update-user-info' %}">
+                                        <form method="POST" action="{% url 'update-user-info' %}?tab=settings">
                                             {% csrf_token %}
                                             <div class="form-group">
                                                 <label for="FirstName">First Name</label>
@@ -141,7 +155,7 @@
 
                             <!-- Password-Update -->
 
-                            <div class="tab-pane" id="password" aria-labelledby="password-tab">
+                            <div class="tab-pane fade {% if request.GET.tab == 'password' %} show active {% endif %}" id="password" role="tabpanel" aria-labelledby="password-tab">
 
                                 <!-- Settings-Information -->
                                 <div class="card card-default card-fill">
@@ -149,19 +163,28 @@
                                         <h3 class="card-title">Edit Password</h3>
                                     </div>
                                     <div class="card-body">
-                                        <form method="POST" action="{% url 'update-password' %}">
+                                        <form method="POST" action="{% url 'update-password' %}?tab=password">
                                             {% csrf_token %}
                                             <div class="form-group">
                                                 <label for="OldPassword">Old Password</label>
                                                 <input type="password" value="{{ old_password }}" name="old_password" id="FirstName" class="form-control">
+                                                {% if password_form.old_password.errors %}
+                                                    <small class="text-danger">{{ password_form.old_password.errors.0 }}</small>
+                                                {% endif %}
                                             </div>
                                             <div class="form-group">
                                                 <label for="NewPassword">New Password</label>
                                                 <input type="password" value="{{ new_password1 }}" name="new_password1" id="NewPassword" class="form-control">
+                                                {% if password_form.new_password1.errors %}
+                                                    <small class="text-danger">{{ password_form.new_password1.errors.0 }}</small>
+                                                {% endif %}
                                             </div>
                                             <div class="form-group">
                                                 <label for="ConfirmPassword">Confirm Password</label>
                                                 <input type="password" value="{{ new_password2 }}" name="new_password2" id="ConfirmPassword" class="form-control">
+                                                {% if password_form.new_password2.errors %}
+                                                    <small class="text-danger">{{ password_form.new_password2.errors.0 }}</small>
+                                                {% endif %}
                                             </div>
                                             
                                             <button class="btn btn-primary waves-effect waves-light w-md" type="submit">Save</button>

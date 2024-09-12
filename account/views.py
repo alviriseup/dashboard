@@ -1,7 +1,11 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
+
 from .forms import UpdateUserForm, UpdatePasswordForm
 
 
@@ -28,7 +32,8 @@ def update_user_info(request):
         if user_form.is_valid():
             user_form.save()
             messages.success(request, 'Your profile has been updated successfully!')
-            return redirect('user-profile')
+            # return redirect('user-profile')
+            return HttpResponseRedirect(reverse('user-profile') + '?tab=settings')
         else:
             messages.error(request, 'Error updating profile info.')
 
@@ -49,7 +54,8 @@ def update_password(request):
             user = password_form.save()
             update_session_auth_hash(request, user)     # Keeps user logged in after password change
             messages.success(request, 'Your password has been updated successfully!')
-            return redirect('user-profile')
+            # return redirect('user-profile')
+            return HttpResponseRedirect(reverse('user-profile') + '?tab=password')
         else:
             messages.error(request, 'Error updating password.')
 

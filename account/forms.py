@@ -15,11 +15,23 @@ class UpdateUserForm(forms.ModelForm):
 
 
 class UpdatePasswordForm(PasswordChangeForm):
-    old_password = forms.CharField(widget=forms.PasswordInput(), required=True)
-    new_password1 = forms.CharField(widget=forms.PasswordInput(), required=True)
-    new_password2 = forms.CharField(widget=forms.PasswordInput(), required=True)
+    # old_password = forms.CharField(widget=forms.PasswordInput(), required=True)
+    # new_password1 = forms.CharField(widget=forms.PasswordInput(), required=True)
+    # new_password2 = forms.CharField(widget=forms.PasswordInput(), required=True)
 
     class Meta:
         model = User
         fields = ['old_password', 'new_password1', 'new_password2']
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password1 = cleaned_data.get("new_password1")
+        new_paswword2 = cleaned_data.get("new_password2")
+
+        if new_password1 and new_paswword2 and new_password1 != new_paswword2:
+            raise forms.ValidationError("The new passwords do not match.")
+        
+        return cleaned_data
+    
         
