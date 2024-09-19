@@ -1,5 +1,8 @@
+from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+
 from blog.models import Post, Comment
 from blog.forms import CommentForm
 
@@ -49,3 +52,15 @@ def blog_detail(request, pk):
     }
 
     return render(request, "blog/post_detail.html", context)
+
+
+@login_required
+def blog_list(request):
+    query = request.GET.get('search', '')
+    blogs = Post.objects.filter(title__icontains=query)
+
+    paginator = Paginator(blogs, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'blog/blog_list.html', {'page_obj': page_obj, 'query': query})
