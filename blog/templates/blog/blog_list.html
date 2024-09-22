@@ -56,7 +56,13 @@
                                                             {% for post in page_obj %}
                                                                 <tr>
                                                                     <td>{{ post.title }}</td>
-                                                                    <td>{{ post.categories }}</td>
+                                                                    <td>
+                                                                        {% for category in post.categories.all %}
+                                                                            {{ category.name }}{% if not forloop.last %}, {% endif %}
+                                                                        {% empty %}
+                                                                            No categories
+                                                                        {% endfor %}
+                                                                    </td>
                                                                     <td>{{ post.created_on }}</td>
                                                                     <td>{{ post.last_modified }}</td>
                                                                 </tr>
