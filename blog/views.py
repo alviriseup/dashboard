@@ -57,7 +57,7 @@ def blog_detail(request, pk):
 @login_required
 def blog_list(request):
     query = request.GET.get('search', '')
-    blogs = Post.objects.filter(title__icontains=query)
+    blogs = Post.objects.filter(title__icontains=query).order_by("-created_on")
 
     paginator = Paginator(blogs, 5)
     page_number = request.GET.get('page')
@@ -70,17 +70,18 @@ def blog_list(request):
 @login_required
 def create_blog_post(request):
     if request.method == "POST":
+        print(request.POST.get('body'))
         form = BlogPostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.body = request.POST.get('body')    # Get the HTML from the hidden textarea
-            print("Post body:", post.body)  # Debug the post body
+            # post.body = request.POST.get('body')    # Get the HTML from the hidden textarea
+            # print("Post body:", post.body)  # Debug the post body
             post.save()
             form.save_m2m()     # save the mant-to-many data (categories)
             return redirect("blog_list")
-        else:
-            print("Form is not valid")
-            print(form.errors)  # Print form errors if any
+        # else:
+        #     print("Form is not valid")
+        #     print(form.errors)  # Print form errors if any
         
     else:
         form = BlogPostForm()

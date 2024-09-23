@@ -43,7 +43,7 @@
                         <h3 class="card-title">Post Editor</h3></div>
                     <div class="card-body">
 
-                        <form method="POST">
+                        <form method="POST" id="postForm2" onsubmit="formSubmit()">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="title">Title</label>
@@ -84,7 +84,7 @@
                             <!-- end Snow-editor-->
 
                             <!-- Hidden field to submit body content -->
-                            <textarea id="post-body" name="body" style="display:none;"></textarea>
+                            <input type="hidden" id="post-body" name="body">
 
                             <button type="submit" class="btn btn-primary">Create Post</button>
 
@@ -103,22 +103,44 @@
 
 </div>
 
-<!-- On form submit, copy Quill content to the hidden textarea -->
-<script>
-        var form = document.querySelector('form');
-        form.onsubmit = function() {
-            var postBody = document.querySelector('#post-body');
-            postBody.value = quill.root.innerHTML;
-        };
-</script>
-
 
 <!-- Plugins js -->
 <script src="{% static 'assets/libs/katex/katex.min.js' %}"></script>
 <script src="{% static 'assets/libs/quill/quill.min.js' %}"></script>
 
 <!-- Init js-->
-<script src="{% static 'assets/js/pages/form-quilljs.init.js' %}"></script>
+<!-- <script src="{% static 'assets/js/pages/form-quilljs.init.js' %}"></script> -->
+
+
+<!-- On form submit, copy Quill content to the hidden textarea -->
+<script>
+var quill = new Quill("#snow-editor", {
+    theme: "snow",
+    modules: {
+        toolbar: [
+            [{ font: [] }, { size: [] }],
+            ["bold", "italic", "underline", "strike"],
+            [{ color: [] }, { background: [] }],
+            [{ script: "super" }, { script: "sub" }],
+            [{ header: [false, 1, 2, 3, 4, 5, 6] }, "blockquote", "code-block"],
+            [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+            ["direction", { align: [] }],
+            ["link", "image", "video", "formula"],
+            ["clean"]
+        ]
+    }
+});
+
+
+    function formSubmit() {
+        console.log("form submitted")
+        document.getElementById("post-body").value = quill.root.innerHTML;  
+      }
+
+</script>
+
+
+
 
 {% endblock  %}
 
