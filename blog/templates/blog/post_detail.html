@@ -25,7 +25,8 @@
 
     </small>
 
-    <p>{{ post.body | linebreaks }}</p>
+    {% comment %} <p>{{ post.body | linebreaks }}</p> {% endcomment %}
+    <p>{{ post.body | safe }}</p>
 
     <h3>Leave a comment:</h3>
 
