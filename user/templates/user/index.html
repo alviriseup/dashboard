@@ -15,7 +15,7 @@
         <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
 
         <!-- Plugins css-->
-        <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
 
         <!-- App css -->
         <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
@@ -191,31 +191,32 @@
         <!-- Vendor js -->
         <script src="{% static 'assets/js/vendor.min.js' %}"></script>
 
-        <script src="{% static 'assets/libs/moment/moment.min' %}.js"></script>
-        <script src="{% static 'assets/libs/jquery-scrollto/jquery' %}.scrollTo.min.js"></script>
-        <script src="{% static 'assets/libs/sweetalert2/sweetalert2.min' %}.js"></script>
+        <script src="{% static 'assets/libs/moment/moment.min.js' %}"></script>
+        <script src="{% static 'assets/libs/jquery-scrollto/jquery.scrollTo.min.js' %}"></script>
+        <script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js' %}"></script>
         
         <!-- Chat app -->
-        <script src="{% static 'assets/js/pages/jquery.chat' %}.js"></script>
+        <script src="{% static 'assets/js/pages/jquery.chat.js' %}"></script>
 
         <!-- Todo app -->
-        <script src="{% static 'assets/js/pages/jquery.todo' %}.js"></script>
+        <script src="{% static 'assets/js/pages/jquery.todo.js' %}"></script>
 
         <!-- flot chart -->
-        <script src="{% static 'assets/libs/flot-charts/jquery' %}.flot.js"></script>
-        <script src="{% static 'assets/libs/flot-charts/jquery' %}.flot.time.js"></script>
-        <script src="{% static 'assets/libs/flot-charts/jquery' %}.flot.tooltip.min.js"></script>
-        <script src="{% static 'assets/libs/flot-charts/jquery' %}.flot.resize.js"></script>
-        <script src="{% static 'assets/libs/flot-charts/jquery' %}.flot.pie.js"></script>
-        <script src="{% static 'assets/libs/flot-charts/jquery' %}.flot.selection.js"></script>
-        <script src="{% static 'assets/libs/flot-charts/jquery' %}.flot.stack.js"></script>
-        <script src="{% static 'assets/libs/flot-charts/jquery' %}.flot.crosshair.js"></script>
+        <script src="{% static 'assets/libs/flot-charts/jquery.flot.js' %}"></script>
+        <script src="{% static 'assets/libs/flot-charts/jquery.flot.time.js' %}"></script>
+        <script src="{% static 'assets/libs/flot-charts/jquery.flot.tooltip.min.js' %}"></script>
+        <script src="{% static 'assets/libs/flot-charts/jquery.flot.resize.js' %}"></script>
+        <script src="{% static 'assets/libs/flot-charts/jquery.flot.pie.js' %}"></script>
+        <script src="{% static 'assets/libs/flot-charts/jquery.flot.selection.js' %}"></script>
+        <script src="{% static 'assets/libs/flot-charts/jquery.flot.stack.js' %}"></script>
+        <script src="{% static 'assets/libs/flot-charts/jquery.flot.crosshair.js' %}"></script>
 
         <!-- Dashboard init JS -->
         <script src="{% static 'assets/js/pages/dashboard.init.js' %}"></script>
 
         <!-- App js -->
         <script src="{% static 'assets/js/app.min.js' %}"></script>
+
 
     </body>
 

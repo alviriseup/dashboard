@@ -1,0 +1,124 @@
+{% extends "user/index.html" %}
+
+{% load static %}
+
+
+
+
+
+{% block content %}
+
+<!-- Plugins css -->
+<link href="{% static 'assets/libs/quill/quill.core.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/libs/quill/quill.bubble.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/libs/quill/quill.snow.css' %}" rel="stylesheet" type="text/css" />
+
+<div id="wrapper">
+
+    <!-- Start Content-->
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Create Post</h4>
+                    <div class="page-title-right">
+                        <ol class="breadcrumb p-0 m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'blog_list' %}">Blog List</a></li>
+                            <li class="breadcrumb-item active">Create Post</li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Post Editor</h3></div>
+                    <div class="card-body">
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                {{ form.title }}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="categories">Categories</label>
+                                {{ form.categories }}
+                            </div>
+
+                            <!-- editor -->
+                            <div id="snow-editor" style="height: 300px;">
+                                {% comment %} <h3><span class="ql-size-large">Hello World!</span></h3>
+                                <p>
+                                    <br>
+                                </p>
+                                <h3>This is an simple editable area.</h3>
+                                <p>
+                                    <br>
+                                </p>
+                                <ul>
+                                    <li>
+                                        Select a text to reveal the toolbar.
+                                    </li>
+                                    <li>
+                                        Edit rich document on-the-fly, so elastic!
+                                    </li>
+                                </ul>
+                                <p>
+                                    <br>
+                                </p>
+                                <p>
+                                    End of simple area
+                                </p> {% endcomment %}
+
+                            </div>
+                            <!-- end Snow-editor-->
+
+                            <!-- Hidden field to submit body content -->
+                            <textarea id="post-body" name="body" style="display:none;"></textarea>
+
+                            <button type="submit" class="btn btn-primary">Create Post</button>
+
+                        </form>
+                    </div>
+                    <!-- end card-body-->
+                </div>
+                <!-- end card-->
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+
+    </div>
+    <!-- end container-fluid -->
+
+</div>
+
+<!-- On form submit, copy Quill content to the hidden textarea -->
+<script>
+        var form = document.querySelector('form');
+        form.onsubmit = function() {
+            var postBody = document.querySelector('#post-body');
+            postBody.value = quill.root.innerHTML;
+        };
+</script>
+
+
+<!-- Plugins js -->
+<script src="{% static 'assets/libs/katex/katex.min.js' %}"></script>
+<script src="{% static 'assets/libs/quill/quill.min.js' %}"></script>
+
+<!-- Init js-->
+<script src="{% static 'assets/js/pages/form-quilljs.init.js' %}"></script>
+
+{% endblock  %}
+

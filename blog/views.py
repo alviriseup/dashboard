@@ -1,10 +1,10 @@
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from blog.models import Post, Comment
-from blog.forms import CommentForm
+from blog.forms import CommentForm, BlogPostForm
 
 
 def blog_index(request):
@@ -64,3 +64,26 @@ def blog_list(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'blog/blog_list.html', {'page_obj': page_obj, 'query': query})
+
+
+
+@login_required
+def create_blog_post(request):
+    if request.method == "POST":
+        form = BlogPostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.body = request.POST.get('body')    # Get the HTML from the hidden textarea
+            print("Post body:", post.body)  # Debug the post body
+            post.save()
+            form.save_m2m()     # save the mant-to-many data (categories)
+            return redirect("blog_list")
+        else:
+            print("Form is not valid")
+            print(form.errors)  # Print form errors if any
+        
+    else:
+        form = BlogPostForm()
+
+    
+    return render(request, "blog/blog_post_form.html", {"form": form})
