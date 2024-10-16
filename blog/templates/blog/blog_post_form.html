@@ -157,7 +157,7 @@ if (existingContent) {
     quill.root.innerHTML = existingContent;  // Set the existing content to Quill editor
 }
 
-
+    // Submit and save the form (post content)
     function formSubmit() {
         console.log("form submitted")
         document.getElementById("post-body").value = quill.root.innerHTML;  

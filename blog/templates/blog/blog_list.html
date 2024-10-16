@@ -78,7 +78,36 @@
                                                                         <a href="{% url 'edit_blog_post' post.pk %}" title="Edit">
                                                                             <i class="fas fa-edit"></i>
                                                                         </a>
+                                                                        |
+                                                                        <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteModal{{ post.pk }}" title="Delete">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </a>
                                                                     </td>
+
+                                                                        <!-- Modal for delete confirmation -->
+                                                                        <div class="modal fade" id="deleteModal{{ post.pk }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ post.pk }}" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title" id="deleteModalLabel{{ post.pk }}">Confirm Delete</h5>
+                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                            <span aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <p>Are you sure you want to delete the post "{{ post.title }}"?</p>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <form method="POST" action="{% url 'delete_blog_post' post.pk %}">
+                                                                                            {% csrf_token %}
+                                                                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
                                                                 </tr>
                                                             {% empty %}
                                                                 <tr>

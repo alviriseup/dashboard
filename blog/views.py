@@ -108,3 +108,12 @@ def edit_blog_post(request, pk):
         form = BlogPostForm(instance=post)
     
     return render(request, "blog/blog_post_form.html", {"form": form, "post": post})
+
+
+@login_required
+def delete_blog_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        post.delete()
+        return redirect("blog_list")
+    
