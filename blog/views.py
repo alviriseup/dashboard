@@ -1,10 +1,14 @@
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 
 from blog.models import Post, Comment
 from blog.forms import CommentForm, BlogPostForm
+
+
+def blog_home(request):
+    return render(request, "blog/home.html")
 
 
 def blog_index(request):
@@ -88,3 +92,19 @@ def create_blog_post(request):
 
     
     return render(request, "blog/blog_post_form.html", {"form": form})
+
+
+@login_required
+def edit_blog_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.method == "POST":
+        form = BlogPostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect("blog_list")
+    
+    else:
+        form = BlogPostForm(instance=post)
+    
+    return render(request, "blog/blog_post_form.html", {"form": form, "post": post})

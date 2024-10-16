@@ -22,12 +22,24 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="page-title">Create Post</h4>
+                    <h4 class="page-title">
+                        {% if post %}
+                            Edit Post
+                        {% else %}
+                            Create Post
+                        {% endif %}
+                    </h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb p-0 m-0">
                             <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="{% url 'blog_list' %}">Blog List</a></li>
-                            <li class="breadcrumb-item active">Create Post</li>
+                            <li class="breadcrumb-item active">
+                                {% if post %}
+                                    Edit Post
+                                {% else %}
+                                    Create Post
+                                {% endif %}
+                            </li>
                         </ol>
                     </div>
                     <div class="clearfix"></div>
@@ -84,10 +96,16 @@
                             <!-- end Snow-editor-->
 
                             <!-- Hidden field to submit body content -->
-                            <input type="hidden" id="post-body" name="body">
+                            <input type="hidden" id="post-body" name="body" value="{{ form.body.value|safe }}">
 
                             <div class="d-flex justify-content-end mt-3">
-                                <button type="submit" class="btn btn-primary">Create Post</button>
+                                <button type="submit" class="btn btn-primary">
+                                    {% if post %}
+                                        Edit Post
+                                    {% else %}
+                                        Create Post
+                                    {% endif %}
+                                </button>
                             </div>
 
                         </form>
@@ -132,6 +150,12 @@ var quill = new Quill("#snow-editor", {
         ]
     }
 });
+
+// Load existing content into the Quill editor when editing
+var existingContent = document.getElementById("post-body").value;
+if (existingContent) {
+    quill.root.innerHTML = existingContent;  // Set the existing content to Quill editor
+}
 
 
     function formSubmit() {

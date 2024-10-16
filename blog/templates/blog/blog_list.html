@@ -57,6 +57,7 @@
                                                                 <th>Category</th>
                                                                 <th>Created On</th>
                                                                 <th>Last Modified</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -72,6 +73,12 @@
                                                                     </td>
                                                                     <td>{{ post.created_on }}</td>
                                                                     <td>{{ post.last_modified }}</td>
+                                                                    <!-- Action column -->
+                                                                    <td>
+                                                                        <a href="{% url 'edit_blog_post' post.pk %}" title="Edit">
+                                                                            <i class="fas fa-edit"></i>
+                                                                        </a>
+                                                                    </td>
                                                                 </tr>
                                                             {% empty %}
                                                                 <tr>
