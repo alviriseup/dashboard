@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 
@@ -114,6 +115,8 @@ def edit_blog_post(request, pk):
 def delete_blog_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
+        post_title = post.title
         post.delete()
+        messages.success(request, f'Post "{post_title}" has been deleted successfully!')
         return redirect("blog_list")
     
