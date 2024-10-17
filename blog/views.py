@@ -4,9 +4,11 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 
-from blog.models import Post, Comment
-from blog.forms import CommentForm, BlogPostForm
+from blog.models import Post, Category, Comment
+from blog.forms import CommentForm, BlogPostForm, CategoryForm
 
+
+# -------------- Blog Views Start -------------- #
 
 def blog_home(request):
     return render(request, "blog/home.html")
@@ -102,7 +104,9 @@ def edit_blog_post(request, pk):
     if request.method == "POST":
         form = BlogPostForm(request.POST, instance=post)
         if form.is_valid():
+            post_title = form.cleaned_data['title']
             form.save()
+            messages.success(request, f'Post "{post_title} has been updated successfully!')
             return redirect("blog_list")
     
     else:
@@ -119,4 +123,69 @@ def delete_blog_post(request, pk):
         post.delete()
         messages.success(request, f'Post "{post_title}" has been deleted successfully!')
         return redirect("blog_list")
+
+
+# -------------- Blog Views End -------------- #
+
+
+# -------------- Category Views Start -------------- #
+
+
+@login_required
+def category_list(request):
+    query = request.GET.get('search', '')
+    categories = Category.objects.filter(name__icontains=query).order_by("name")
+
+    paginator = Paginator(categories, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'blog/category_list.html', {'page_obj': page_obj, 'query': query})
+
+
+@login_required
+def create_category(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category_name = form.cleaned_data['name']
+            form.save()
+            messages.success(request, f'Category "{category_name}" created successfully!')
+            return redirect('category_list')
+        
+    else:
+        form = CategoryForm()
+
+    return render(request, 'blog/category_form.html', {'form': form}) 
+
+
+
+@login_required
+def edit_category(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+
+    if request.method == "POST":
+        old_category = category.name
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            new_category = form.cleaned_data['name']
+            form.save()
+            messages.success(request, f'Category "{old_category}" has been changed to "{new_category}" succussfully!')
+            return redirect('category_list')
+        
+    else:
+        form = CategoryForm(instance=category)
+
+    return render(request, "blog/category_form.html", {"form": form, "category": category})
+
+
+@login_required
+def delete_category(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+
+    if request.method == "POST":
+        category_name = category.name
+        category.delete()
+        messages.success(request, f'Category "{category_name}" has been deleted succussfully!')
+        return redirect("category_list")
     

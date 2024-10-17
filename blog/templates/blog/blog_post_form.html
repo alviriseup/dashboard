@@ -12,6 +12,8 @@
 <link href="{% static 'assets/libs/quill/quill.core.css' %}" rel="stylesheet" type="text/css" />
 <link href="{% static 'assets/libs/quill/quill.bubble.css' %}" rel="stylesheet" type="text/css" />
 <link href="{% static 'assets/libs/quill/quill.snow.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/libs/select2/select2.min.css' %}" rel="stylesheet" type="text/css" />
+
 
 <div id="wrapper">
 
@@ -62,9 +64,17 @@
                                 {{ form.title }}
                             </div>
 
-                            <div class="form-group">
-                                <label for="categories">Categories</label>
-                                {{ form.categories }}
+                            <div class="form-group d-flex align-items-center">
+                                <label for="categories" class="mr-2">Categories</label>
+                                <div class="select2-container">
+                                    <select class="form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Choose a Category..." style="width: 50%;">
+                                        {% comment %} {{ form.categories }} {% endcomment %}
+                                        <option value="#">&nbsp;</option>
+                                        {% for category in form.categories %}
+                                            <option value="{{ category.pk }}">{{ category }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
 
                             <!-- editor -->
@@ -125,12 +135,46 @@
 
 
 <!-- Plugins js -->
+<script src="{% static 'assets/libs/select2/select2.min.js' %}"></script>
 <script src="{% static 'assets/libs/katex/katex.min.js' %}"></script>
 <script src="{% static 'assets/libs/quill/quill.min.js' %}"></script>
 
+
 <!-- Init js-->
 <!-- <script src="{% static 'assets/js/pages/form-quilljs.init.js' %}"></script> -->
+{% comment %} <script src="{% static 'assets/js/pages/form-advanced.init.js' %}"></script> {% endcomment %}
 
+
+
+<!-- Select2 -->
+
+<script>
+    $(document).ready(function() {
+        !function(o) {
+            "use strict";
+            
+            var t = function() {};
+
+            t.prototype.initSelect2 = function() {
+                o('[data-toggle="select2"]').select2({
+                    placeholder: "Choose a Category...",
+                    allowClear: true // Allows clearing the selection
+                });
+            };
+
+            t.prototype.init = function() {
+                this.initSelect2();
+            };
+
+            o.Components = new t;
+            o.Components.Constructor = t;
+
+        }(window.jQuery), function(t) {
+            "use strict";
+            window.jQuery.Components.init();
+        }();
+    });
+</script>
 
 <!-- On form submit, copy Quill content to the hidden textarea -->
 <script>
