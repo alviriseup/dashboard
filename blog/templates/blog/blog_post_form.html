@@ -3,16 +3,18 @@
 {% load static %}
 
 
+{% block extra_css %}
 
+    <!-- Plugins css -->
+    <link href="{% static 'assets/libs/quill/quill.core.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'assets/libs/quill/quill.bubble.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'assets/libs/quill/quill.snow.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'assets/libs/select2/select2.min.css' %}" rel="stylesheet" type="text/css" />
+		
+{% endblock extra_css %}
 
 
 {% block content %}
-
-<!-- Plugins css -->
-<link href="{% static 'assets/libs/quill/quill.core.css' %}" rel="stylesheet" type="text/css" />
-<link href="{% static 'assets/libs/quill/quill.bubble.css' %}" rel="stylesheet" type="text/css" />
-<link href="{% static 'assets/libs/quill/quill.snow.css' %}" rel="stylesheet" type="text/css" />
-<link href="{% static 'assets/libs/select2/select2.min.css' %}" rel="stylesheet" type="text/css" />
 
 
 <div id="wrapper">
@@ -60,12 +62,12 @@
                         <form method="POST" id="postForm2" onsubmit="formSubmit()">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label for="title">Title</label>
+                                <label for="title" class="mr-4">Title</label>
                                 {{ form.title }}
                             </div>
 
                             <div class="form-group d-flex align-items-center">
-                                <label for="categories" class="mr-2">Categories</label>
+                                <label for="categories" class="mr-4">Categories</label>
                                 <div class="select2-container">
                                     <select class="form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Choose a Category..." style="width: 50%;">
                                         {% comment %} {{ form.categories }} {% endcomment %}
@@ -79,29 +81,6 @@
 
                             <!-- editor -->
                             <div id="snow-editor" style="height: 300px;">
-                                {% comment %} <h3><span class="ql-size-large">Hello World!</span></h3>
-                                <p>
-                                    <br>
-                                </p>
-                                <h3>This is an simple editable area.</h3>
-                                <p>
-                                    <br>
-                                </p>
-                                <ul>
-                                    <li>
-                                        Select a text to reveal the toolbar.
-                                    </li>
-                                    <li>
-                                        Edit rich document on-the-fly, so elastic!
-                                    </li>
-                                </ul>
-                                <p>
-                                    <br>
-                                </p>
-                                <p>
-                                    End of simple area
-                                </p> {% endcomment %}
-
                             </div>
                             <!-- end Snow-editor-->
 
@@ -134,83 +113,127 @@
 </div>
 
 
-<!-- Plugins js -->
-<script src="{% static 'assets/libs/select2/select2.min.js' %}"></script>
-<script src="{% static 'assets/libs/katex/katex.min.js' %}"></script>
-<script src="{% static 'assets/libs/quill/quill.min.js' %}"></script>
+{% endblock content %}
 
 
-<!-- Init js-->
-<!-- <script src="{% static 'assets/js/pages/form-quilljs.init.js' %}"></script> -->
-{% comment %} <script src="{% static 'assets/js/pages/form-advanced.init.js' %}"></script> {% endcomment %}
+{% block extra_js %}
+		
+    <!-- Plugins js -->
+    <script src="{% static 'assets/libs/select2/select2.min.js' %}"></script>
+    <script src="{% static 'assets/libs/katex/katex.min.js' %}"></script>
+    <script src="{% static 'assets/libs/quill/quill.min.js' %}"></script>
+
+
+    <!-- Init js-->
+    {% comment %} <!-- <script src="{% static 'assets/js/pages/form-quilljs.init.js' %}"></script> --> {% endcomment %}
+    {% comment %} <script src="{% static 'assets/js/pages/form-advanced.init.js' %}"></script> {% endcomment %}
 
 
 
-<!-- Select2 -->
+    <!-- Select2 -->
 
-<script>
-    $(document).ready(function() {
-        !function(o) {
-            "use strict";
-            
-            var t = function() {};
+    {% comment %} <script>
+        $(document).ready(function() {
+            !function(o) {
+                "use strict";
+                
+                var t = function() {};
 
-            t.prototype.initSelect2 = function() {
-                o('[data-toggle="select2"]').select2({
-                    placeholder: "Choose a Category...",
-                    allowClear: true // Allows clearing the selection
-                });
-            };
+                t.prototype.initSelect2 = function() {
+                    o('[data-toggle="select2"]').select2({
+                        placeholder: "Choose a Category...",
+                        allowClear: true // Allows clearing the selection
+                    });
+                };
 
-            t.prototype.init = function() {
-                this.initSelect2();
-            };
+                t.prototype.init = function() {
+                    this.initSelect2();
+                };
 
-            o.Components = new t;
-            o.Components.Constructor = t;
+                o.Components = new t;
+                o.Components.Constructor = t;
 
-        }(window.jQuery), function(t) {
-            "use strict";
-            window.jQuery.Components.init();
-        }();
+            }(window.jQuery), function(t) {
+                "use strict";
+                window.jQuery.Components.init();
+            }();
+        });
+    </script> {% endcomment %}
+
+
+    <script>
+        $(document).ready(function() {
+            !function(o) {
+                "use strict";
+    
+                var t = function() {};
+    
+                t.prototype.initSelect2 = function() {
+                    o('[data-toggle="select2"]').select2({
+                        placeholder: "Choose a Category...",
+                        allowClear: true, // Allows clearing the selection
+                        templateSelection: function(data, container) {
+                            // Apply inline styling for selected options (blue box)
+                            $(container).css({
+                                'background-color': 'blue',
+                                'color': 'white',
+                                'display': 'inline-block',
+                                'padding': '3px 6px',
+                                'border-radius': '4px',
+                                'margin': '2px 4px'
+                            });
+                            return data.text;
+                        }
+                    });
+                };
+    
+                t.prototype.init = function() {
+                    this.initSelect2();
+                };
+    
+                o.Components = new t;
+                o.Components.Constructor = t;
+    
+            }(window.jQuery), function(t) {
+                "use strict";
+                window.jQuery.Components.init();
+            }();
+        });
+    </script>
+
+
+    <!-- On form submit, copy Quill content to the hidden textarea -->
+    <script>
+    var quill = new Quill("#snow-editor", {
+        theme: "snow",
+        modules: {
+            toolbar: [
+                [{ font: [] }, { size: [] }],
+                ["bold", "italic", "underline", "strike"],
+                [{ color: [] }, { background: [] }],
+                [{ script: "super" }, { script: "sub" }],
+                [{ header: [false, 1, 2, 3, 4, 5, 6] }, "blockquote", "code-block"],
+                [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+                ["direction", { align: [] }],
+                ["link", "image", "video", "formula"],
+                ["clean"]
+            ]
+        }
     });
-</script>
 
-<!-- On form submit, copy Quill content to the hidden textarea -->
-<script>
-var quill = new Quill("#snow-editor", {
-    theme: "snow",
-    modules: {
-        toolbar: [
-            [{ font: [] }, { size: [] }],
-            ["bold", "italic", "underline", "strike"],
-            [{ color: [] }, { background: [] }],
-            [{ script: "super" }, { script: "sub" }],
-            [{ header: [false, 1, 2, 3, 4, 5, 6] }, "blockquote", "code-block"],
-            [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
-            ["direction", { align: [] }],
-            ["link", "image", "video", "formula"],
-            ["clean"]
-        ]
+    // Load existing content into the Quill editor when editing
+    var existingContent = document.getElementById("post-body").value;
+    if (existingContent) {
+        quill.root.innerHTML = existingContent;  // Set the existing content to Quill editor
     }
-});
 
-// Load existing content into the Quill editor when editing
-var existingContent = document.getElementById("post-body").value;
-if (existingContent) {
-    quill.root.innerHTML = existingContent;  // Set the existing content to Quill editor
-}
+        // Submit and save the form (post content)
+        function formSubmit() {
+            console.log("form submitted")
+            document.getElementById("post-body").value = quill.root.innerHTML;  
+        }
 
-    // Submit and save the form (post content)
-    function formSubmit() {
-        console.log("form submitted")
-        document.getElementById("post-body").value = quill.root.innerHTML;  
-      }
+    </script>
 
-</script>
-
-
-
-
-{% endblock  %}
+{% endblock extra_js %}
 
