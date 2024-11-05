@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
+from django.db.models import Count
 
 from blog.models import Post, Category, Comment
 from blog.forms import CommentForm, BlogPostForm, CategoryForm
@@ -15,7 +16,12 @@ def blog_home(request):
 
 
 def blog_index(request):
-    posts = Post.objects.all().order_by("-created_on")
+    posts_list = Post.objects.all().order_by("-created_on").annotate(comment_count=Count('comment'))
+    
+    paginator = Paginator(posts_list, 4)
+    page_number = request.GET.get("page")
+    posts = paginator.get_page(page_number)
+    
     context = {
         "posts": posts,
     }
@@ -52,10 +58,12 @@ def blog_detail(request, pk):
 
 
     comments = Comment.objects.filter(post=post)
+    comment_count = comments.count()
     context = {
         "post": post,
         "comments": comments,
         "form": CommentForm(),
+        "comment_count": comment_count,
     }
 
     return render(request, "blog/post_detail.html", context)
