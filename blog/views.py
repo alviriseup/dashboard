@@ -42,7 +42,7 @@ def blog_category(request, category):
 
 
 def blog_detail(request, pk):
-    post = Post.objects.get(pk=pk)
+    post = Post.objects.filter(pk=pk).annotate(comment_count=Count('comment')).first()
 
     form = CommentForm()
     if request.method == "POST":
@@ -58,12 +58,24 @@ def blog_detail(request, pk):
 
 
     comments = Comment.objects.filter(post=post)
-    comment_count = comments.count()
+    # comment_count = comments.count()
+
+    lastest_posts = Post.objects.all().order_by("-created_on")[:3]  # Get the 3 latest posts for the sidebar
+
+    # Fetch the previous post
+    previous_post = Post.objects.filter(created_on__lt=post.created_on).order_by("-created_on").first()
+
+    # Fetch the next post
+    next_post = Post.objects.filter(created_on__gt=post.created_on).order_by("created_on").first()
+
     context = {
         "post": post,
         "comments": comments,
         "form": CommentForm(),
-        "comment_count": comment_count,
+        # "comment_count": comment_count,
+        "latest_posts": lastest_posts,
+        "previous_post": previous_post,
+        "next_post": next_post,
     }
 
     return render(request, "blog/post_detail.html", context)

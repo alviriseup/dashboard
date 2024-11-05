@@ -1,72 +1,245 @@
 {% extends "blog/base.html" %}
+{% load static %}
 
-{% block page_title %}
+{% block content %}
 
-    <h2>{{ post.title }}</h2>
-
-{% endblock page_title %}
-
-
-{% block page_content %}
-
-    <small>
-
-        {{ post.created_on.date }} | Categories:
-
-        {% for category in post.categories.all %}
-
-            <a href="{% url 'blog_category' category.name %}">
-
-                {{ category.name }}
-
-            </a>
-
-        {% endfor %}
-
-    </small>
-
-    {% comment %} <p>{{ post.body | linebreaks }}</p> {% endcomment %}
-    <p>{{ post.body | safe }}</p>
-
-    <h3>Leave a comment:</h3>
-
-    <form method="post">
-
-        {% csrf_token %}
-
-        <div>
-
-            {{ form.author }}
-
+<!-- Banner Start -->
+<section class="page-title bg-1">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="block text-center">
+            <span class="text-white">{{ post.title }}</span>
+            <h1 class="text-capitalize mb-4 text-lg">{{ post.title }}</h1>
+            <ul class="list-inline">
+              <li class="list-inline-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+              <li class="list-inline-item"><span class="text-white">/</span></li>
+              <li class="list-inline-item"><a href="#" class="text-white-50">{{ post.title }}</a></li>
+            </ul>
+          </div>
         </div>
+      </div>
+    </div>
+</section>
+<!-- Banner End -->
 
-        <div>
+<!-- Main Content Start -->
 
-            {{ form.body }}
+<section class="section blog-wrap bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+	<div class="col-lg-12 mb-5">
+		<div class="single-blog-item">
+			<img src="images/blog/2.jpg" alt="" class="img-fluid rounded">
 
+			<div class="blog-item-content bg-white p-5">
+				<div class="blog-item-meta bg-gray py-1 px-2">
+					<span class="text-muted text-capitalize mr-3">
+                        <i class="ti-pencil-alt mr-2"></i>
+                            {% for category in post.categories.all %}
+                                <a href="{% url 'blog_category' category.name %}">
+                                {{ category.name }}{% if not forloop.last %} , {% endif %}
+                                </a>
+                            {% endfor %}
+                    </span>
+					<span class="text-muted text-capitalize mr-3"><i class="ti-comment mr-2"></i>{{ post.comment_count }} Comment{{ post.comment_count|pluralize }}</span>
+					<span class="text-black text-capitalize mr-3"><i class="ti-time mr-1"></i> {{ post.created_on.date }}</span>
+				</div> 
+
+				<h2 class="mt-3 mb-4">{{ post.title }}</h2>
+				<p class="lead mb-4">Any subtitle or flavor text placeholder</p>
+
+				<p>{{ post.body | safe }}</p>
+
+				{% comment %} <h3 class="quote">A brand for a company is like a reputation for a person. You earn reputation by trying to do hard things well.</h3>
+				
+				<p class="lead mb-4 font-weight-normal text-black">The same is true as we experience the emotional sensation of stress from our first instances of social rejection ridicule. We quickly learn to fear and thus automatically.</p>
+
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, rerum beatae repellat tenetur incidunt quisquam libero dolores laudantium. Nesciunt quis itaque quidem, voluptatem autem eos animi laborum iusto expedita sapiente.</p> {% endcomment %}
+
+				<div class="tag-option mt-5 clearfix">
+				    <ul class="float-left list-inline"> 
+				    	<li>Tags:</li> 
+				    	<li class="list-inline-item"><a href="#" rel="tag">Advancher</a></li>
+				    	<li class="list-inline-item"><a href="#" rel="tag">Landscape</a></li>
+				    	<li class="list-inline-item"><a href="#" rel="tag">Travel</a></li>
+				   	</ul>        
+
+				    <ul class="float-right list-inline">
+				        <li class="list-inline-item"> Share: </li>
+				        <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+				        <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+				        <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+				        <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+				    </ul>
+			    </div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-lg-12 mb-5">
+		<div class="posts-nav bg-white p-5 d-lg-flex d-md-flex justify-content-between ">
+			
+			{% if previous_post %}
+				<a class="post-prev align-items-center" href="{% url 'blog_detail' previous_post.pk %}">
+					<div class="posts-prev-item mb-4 mb-lg-0">
+						<span class="nav-posts-desc text-color">- Previous Post</span>
+						<h6 class="nav-posts-title mt-1">
+							{{ previous_post.title }}
+						</h6>
+					</div>
+				</a>
+			{% else %}
+				<h6>This is the oldest post</h6>
+			{% endif %}
+
+			<div class="border"></div>
+
+			{% if next_post %}
+				<a class="posts-next" href="{% url 'blog_detail' next_post.pk %}">
+					<div class="posts-next-item pt-4 pt-lg-0">
+						<span class="nav-posts-desc text-lg-right text-md-right text-color d-block">- Next Post</span>
+						<h6 class="nav-posts-title mt-1">
+							{{ next_post.title }}
+						</h6>
+					</div>
+				</a>
+			{% else %}
+				<h6>This is the latest post</h6>
+			{% endif %}
+
+		</div>
+	</div>
+
+	<div class="col-lg-12 mb-5">
+		<div class="comment-area card border-0 p-5">
+			<h4 class="mb-4">
+				{{ post.comment_count }} Comment{{ post.comment_count|pluralize }}
+			</h4>
+			<ul class="comment-tree list-unstyled">
+
+				{% for comment in comments %}
+					<li class="mb-5">
+						<div class="comment-area-box">
+							<img alt="" src="images/blog/test1.jpg" class="img-fluid float-left mr-3 mt-2">
+
+							<h5 class="mb-1">{{ comment.author }}</h5>
+							<span>United Kingdom</span>
+
+							<div class="comment-meta mt-4 mt-lg-0 mt-md-0 float-lg-right float-md-right">
+								<a href="#"><i class="icofont-reply mr-2 text-muted"></i>Reply |</a>
+								<span class="date-comm">Posted {{ comment.created_on.date }} </span>
+							</div>
+
+							<div class="comment-content mt-3">
+								<p>{{ comment.body | linebreaks }} </p>
+							</div>
+						</div>
+					</li>
+				{% endfor %}
+
+			</ul>
+		</div>
+	</div>
+
+	<div class="col-lg-12">
+		<form class="contact-form bg-white rounded p-5" id="comment-form" method="post">
+			{% csrf_token %}
+			<h4 class="mb-4">Write a comment</h4>
+	
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<input class="form-control" type="text" name="author" id="author" placeholder="Name:">
+					</div>
+				</div>
+				{% comment %} <div class="col-md-6">
+					<div class="form-group">
+						<input class="form-control" type="email" name="email" id="email" placeholder="Email:">
+					</div>
+				</div> {% endcomment %}
+			</div>
+	
+			<div class="form-group">
+				<textarea class="form-control mb-3" name="body" id="body" cols="30" rows="5" placeholder="Comment"></textarea>
+			</div>
+	
+			<input class="btn btn-main btn-round-full" type="submit" value="Submit Message">
+		</form>
+	</div>
+</div>
+            </div>
+            <div class="col-lg-4">
+                <div class="sidebar-wrap">
+	<div class="sidebar-widget search card p-4 mb-3 border-0">
+		<input type="text" class="form-control" placeholder="search">
+		<a href="#" class="btn btn-mian btn-small d-block mt-2">search</a>
+	</div>
+
+	<div class="sidebar-widget card border-0 mb-3">
+		<img src="images/blog/blog-author.jpg" alt="" class="img-fluid">
+		<div class="card-body p-4 text-center">
+			<h5 class="mb-0 mt-4">Arther Conal</h5>
+			<p>Digital Marketer</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, dolore.</p>
+
+			<ul class="list-inline author-socials">
+				<li class="list-inline-item mr-3">
+					<a href="#"><i class="fab fa-facebook-f text-muted"></i></a>
+				</li>
+				<li class="list-inline-item mr-3">
+					<a href="#"><i class="fab fa-twitter text-muted"></i></a>
+				</li>
+				<li class="list-inline-item mr-3">
+					<a href="#"><i class="fab fa-linkedin-in text-muted"></i></a>
+				</li>
+				<li class="list-inline-item mr-3">
+					<a href="#"><i class="fab fa-pinterest text-muted"></i></a>
+				</li>
+				<li class="list-inline-item mr-3">
+					<a href="#"><i class="fab fa-behance text-muted"></i></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="sidebar-widget latest-post card border-0 p-4 mb-3">
+		<h5>Latest Posts</h5>
+		
+		{% for latest_post in latest_posts %}
+			<div class="media border-bottom py-3">
+				<a href="{% url 'blog_detail' latest_post.pk %}"><img class="mr-4" src="images/blog/bt-3.jpg" alt=""></a>
+				<div class="media-body">
+					<h6 class="my-2"><a href="{% url 'blog_detail' latest_post.pk %}">{{ latest_post.title }}</a></h6>
+					<span class="text-sm text-muted">{{ latest_post.created_on.date }}</span>
+				</div>
+			</div>
+		{% endfor %}
+
+	</div>
+
+	<div class="sidebar-widget bg-white rounded tags p-4 mb-3">
+		<h5 class="mb-4">Tags</h5>
+
+		<a href="#">Web</a>
+		<a href="#">agency</a>
+		<a href="#">company</a>
+		<a href="#">creative</a>
+		<a href="#">html</a>
+		<a href="#">Marketing</a>
+		<a href="#">Social Media</a>
+		<a href="#">Branding</a>
+	</div>
+</div>
+            </div>   
         </div>
+    </div>
+</section>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-
-    </form>
+<!-- Main Content Ends -->
 
 
-    <h3>Comments:</h3>
-
-    {% for comment in comments %}
-
-        <p>
-
-            On {{ comment.created_on.date }} <b>{{ comment.author }}</b> wrote:
-
-        </p>
-
-        <p>
-
-            {{ comment.body | linebreaks }}
-
-        </p>
-
-    {% endfor %}
-
-{% endblock page_content %}
+{% endblock  %}

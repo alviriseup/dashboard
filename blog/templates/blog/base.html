@@ -10,7 +10,9 @@
   
   <meta name="author" content="themefisher.com">
 
-  <title>Megakit| Html5 Agency template</title>
+	{% block title %}
+		<title>Megakit| Html5 Agency template</title>
+	{% endblock title %}
 
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}">
@@ -104,7 +106,7 @@
 
 
 
-{% endblock  %}
+{% endblock content %}
 
 <!-- footer Start -->
 	<footer class="footer section">
