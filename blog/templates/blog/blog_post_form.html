@@ -59,7 +59,7 @@
                         <h3 class="card-title">Post Editor</h3></div>
                     <div class="card-body">
 
-                        <form method="POST" id="postForm2" onsubmit="formSubmit()">
+                        <form method="POST" id="postForm2" onsubmit="formSubmit(event)">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="title" class="mr-4">Title</label>
@@ -69,11 +69,11 @@
                             <div class="form-group d-flex align-items-center">
                                 <label for="categories" class="mr-4">Categories</label>
                                 <div class="select2-container">
-                                    <select class="form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Choose a Category..." style="width: 50%;">
+                                    <select name="categories" class="form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Choose a Category..." style="width: 50%;">
                                         {% comment %} {{ form.categories }} {% endcomment %}
                                         <option value="#">&nbsp;</option>
                                         {% for category in form.categories %}
-                                            <option value="{{ category.pk }}">{{ category }}</option>
+                                            <option value="{{ category.pk }}" {% if category.pk in form.categories.value %} selected {% endif %}>{{ category }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -227,10 +227,25 @@
         quill.root.innerHTML = existingContent;  // Set the existing content to Quill editor
     }
 
-        // Submit and save the form (post content)
+        /* // Submit and save the form (post content)
         function formSubmit() {
             console.log("form submitted")
             document.getElementById("post-body").value = quill.root.innerHTML;  
+        } */
+
+         // Form submission handler
+        function formSubmit(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            // Trigger the change event on the select element to sync Select2
+            $('select[data-toggle="select2"]').trigger('change');
+
+            // Update the hidden input field with the content from the Quill editor
+            document.getElementById("post-body").value = quill.root.innerHTML;
+
+            // Manually submit the form after updating the hidden field and select2 value
+            document.getElementById("postForm2").submit();
         }
 
     </script>

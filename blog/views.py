@@ -106,9 +106,10 @@ def create_blog_post(request):
             post.save()
             form.save_m2m()     # save the mant-to-many data (categories)
             return redirect("blog_list")
-        # else:
-        #     print("Form is not valid")
-        #     print(form.errors)  # Print form errors if any
+        else:
+            print("Form is not valid")
+            print(form.errors)  # Print form errors if any
+            print(form)
         
     else:
         form = BlogPostForm()
@@ -126,7 +127,7 @@ def edit_blog_post(request, pk):
         if form.is_valid():
             post_title = form.cleaned_data['title']
             form.save()
-            messages.success(request, f'Post "{post_title} has been updated successfully!')
+            messages.success(request, f'Post "{post_title}" has been updated successfully!')
             return redirect("blog_list")
     
     else:
