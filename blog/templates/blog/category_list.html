@@ -1,0 +1,170 @@
+{% extends "user/index.html" %}
+
+{% block content %}
+
+<div id="wrapper">
+    {% comment %} <div class="content-page"> {% endcomment %}
+        {% comment %} <div class="content"> {% endcomment %}
+
+            {% if messages %}
+                <div class="container mt-3">
+                    {% for message in messages %}
+                        <div class="alert alert-dismissible fade show {{ message.tags }}" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">Category</h4>
+                            <div class="page-title-right">
+                                <ol class="breadcrumb p-0 m-0">
+                                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                                    {% comment %} <li class="breadcrumb-item"><a href="#">Tables</a></li> {% endcomment %}
+                                    <li class="breadcrumb-item active">Category List</li>
+                                </ol>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a href="{% url 'create_category' %}">
+                        <button class="btn btn-primary"><i class="fas fa-folder-plus"></i>
+                            Create Category
+                        </button>
+                    </a>
+                </div>
+                <!-- end page title -->
+
+                            <br/>
+                            <!-- Category Table -->
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h3 class="card-title">Category List</h3>
+                                        <form method="GET" action="{% url 'category_list' %}" class="d-flex">
+                                            <div class="form-group mb-0 mr-2">
+                                                <input type="text" name="search" value="{{ query }}" class="form-control" placeholder="Search by category...">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Search</button>
+                                        </form>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for category in page_obj %}
+                                                                <tr>
+                                                                    <td>{{ category.name }}</td>
+                                                                    <!-- Action column -->
+                                                                    <td>
+                                                                        <a href="{% url 'edit_category' category.pk %}" title="Edit">
+                                                                            <i class="fas fa-edit"></i>
+                                                                        </a>
+                                                                        |
+                                                                        <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteModal{{ category.pk }}" title="Delete">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </a>
+                                                                    </td>
+
+                                                                        <!-- Modal for delete confirmation -->
+                                                                        <div class="modal fade" id="deleteModal{{ category.pk }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ category.pk }}" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title" id="deleteModalLabel{{ category.pk }}">Confirm Delete</h5>
+                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                            <span aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <p>Are you sure you want to delete the category "{{ category.name }}"?</p>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <form method="POST" action="{% url 'delete_category' category.pk %}">
+                                                                                            {% csrf_token %}
+                                                                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                </tr>
+                                                            {% empty %}
+                                                                <tr>
+                                                                    <td colspan="2">No categories found.</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pagination controls -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    {% if page_obj.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=1&search={{ query }}" aria-label="First">
+                                                <span aria-hidden="true">&laquo;&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}&search={{ query }}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+
+                                    <li class="page-item active">
+                                        <span class="page-link">
+                                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                                        </span>
+                                    </li>
+                                    
+                                    {% if page_obj.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ page_obj.next_page_number }}&search={{ query }}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&search={{ query }}" aria-label="Last">
+                                                <span aria-hidden="true">&raquo;&raquo;</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        
+            </div>
+        {% comment %} </div> {% endcomment %}
+    {% comment %} </div> {% endcomment %}
+</div>
+
+
+{% endblock  %}

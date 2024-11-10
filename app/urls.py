@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from user import views as user_view
+from blog import views as blog_view
 from django.contrib.auth import views as auth
 from .router import router
 from rest_framework.authtoken import views
@@ -27,10 +28,13 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
 
-    path('', include('user.urls')),
+    # path('', include('user.urls')),
+    path('', blog_view.blog_home, name='home'),
     path('account/', include('account.urls')),
+    path('blog/', include('blog.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('login/', user_view.Login, name='login'),
     path('logout/', auth.LogoutView.as_view(template_name='user/index.html'), name='logout'),
     path('register/', user_view.register, name='register'),
+    path('portal', include('user.urls')),
 ]

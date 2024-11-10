@@ -1,0 +1,96 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Banner Start -->
+<section class="page-title bg-1">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="block text-center">
+            <span class="text-white">Our blog</span>
+            <h1 class="text-capitalize mb-4 text-lg">Blog articles</h1>
+            <ul class="list-inline">
+              <li class="list-inline-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+              <li class="list-inline-item"><span class="text-white">/</span></li>
+              <li class="list-inline-item"><a href="#" class="text-white-50">Our blog</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<!-- Banner End -->
+
+<!-- Grid Start -->
+
+  <section class="section blog-wrap bg-gray">
+      <div class="container">
+          <div class="row">
+              
+              <!--Grid-->
+              {% for post in posts%}
+                <div class="col-lg-6 col-md-6 mb-5">
+                    <div class="blog-item">
+                        <img src="{% static 'images/blog/1.jpg' %}" alt="" class="img-fluid rounded">
+            
+                        <div class="blog-item-content bg-white p-5">
+                            <div class="blog-item-meta bg-gray py-1 px-2">
+                                <span class="text-muted text-capitalize mr-3">
+                                  <i class="ti-pencil-alt mr-2"></i>
+                                    {% for category in post.categories.all %}
+                                      <a href="{% url 'blog_category' category.name %}">
+                                        {{ category.name }}{% if not forloop.last %} , {% endif %}
+                                      </a>
+                                    {% endfor %}
+                                </span>
+                            </div>
+                            <div class="blog-item-meta bg-gray py-1 px-2">
+                                <span class="text-muted text-capitalize mr-3"><i class="ti-comment mr-2"></i>{{ post.comment_count }} Comment{{ post.comment_count|pluralize }}</span>
+                                <span class="text-black text-capitalize mr-3"><i class="ti-time mr-1"></i> {{ post.created_on.date }}</span>
+                            </div> 
+            
+                            <h3 class="mt-3 mb-3"><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h3>
+                            <p class="mb-4">{{ post.body | slice:":50" }}...</p>
+            
+                            <a href="{% url 'blog_detail' post.pk %}" class="btn btn-small btn-main btn-round-full">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+              {% endfor %}
+
+          </div>
+
+          <!-- Paginator -->
+
+          <div class="row justify-content-center mt-5">
+            <div class="col-lg-6 text-center">
+                <nav class="navigation pagination d-inline-block">
+                    <div class="nav-links">
+                        {% if posts.has_previous %}
+                            <a class="prev page-numbers" href="?page={{ posts.previous_page_number }}">Prev</a>
+                        {% endif %}
+                        
+                        {% for num in posts.paginator.page_range %}
+                            {% if posts.number == num %}
+                                <span aria-current="page" class="page-numbers current">{{ num }}</span>
+                            {% else %}
+                                <a class="page-numbers" href="?page={{ num }}">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if posts.has_next %}
+                            <a class="next page-numbers" href="?page={{ posts.next_page_number }}">Next</a>
+                        {% endif %}
+                      </div>
+                  </nav>
+              </div>
+          </div>
+
+      </div>
+  </section>
+
+<!-- Grid End -->
+
+{% endblock  %}

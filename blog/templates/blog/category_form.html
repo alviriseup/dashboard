@@ -1,0 +1,77 @@
+{% extends "user/index.html" %}
+
+{% load static %}
+
+
+{% block content %}
+
+<div id="wrapper">
+    
+    <!-- Start Content -->
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">
+                        {% if post %}
+                            Edit Category
+                        {% else %}
+                            Create Category
+                        {% endif %}
+                    </h4>
+                    <div class="page-title-right">
+                        <ol class="breadcrumb p-0 m-0">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'category_list' %}">Category List</a></li>
+                            <li class="breadcrumb-item active">
+                                {% if post %}
+                                    Edit Category
+                                {% else %}
+                                    Create Category
+                                {% endif %}
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Category</h3></div>
+                    <div class="card-body">
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="category_name">Name</label>
+                                {{ form.name }}
+                            </div>
+
+                            <div class="d-flex">
+                                <button type="submit" class="btn btn-primary">
+                                    {% if category %}Update Category{% else %}Create Category{% endif %}
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+{% endblock  %}
