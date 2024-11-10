@@ -32,7 +32,11 @@
                 <div class="row">
 	<div class="col-lg-12 mb-5">
 		<div class="single-blog-item">
-			<img src="images/blog/2.jpg" alt="" class="img-fluid rounded">
+			{% if not post.banner_image_url %}
+				<img src="{% static 'images/blog/2.jpg' %}" alt="" class="img-fluid rounded">
+			{% else %}
+				<img src="{{ post.banner_image_url }}" alt="" class="img-fluid rounded">
+			{% endif %}
 
 			<div class="blog-item-content bg-white p-5">
 				<div class="blog-item-meta bg-gray py-1 px-2">

@@ -20,7 +20,7 @@ class BlogPostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'body', 'categories']
+        fields = ['title', 'banner_image_url', 'body', 'categories']
         # widgets = {
         #     # 'categories': forms.CheckboxSelectMultiple,
         #     'categories': forms.SelectMultiple,
